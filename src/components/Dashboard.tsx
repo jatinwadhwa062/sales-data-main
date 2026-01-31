@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Home, Menu, X, FileJson } from 'lucide-react';
+import { Home, FileDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { CleanedData, FilterState } from '../types/dashboard';
 import { calculateKPIs, aggregateByCategory, aggregateByDate } from '../utils/metrics';
 import { KPICard } from './KPICard';
@@ -22,7 +22,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   const [filters, setFilters] = useState<FilterState>({
     categories: {},
   });
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const categoryColumns = data.columns.filter(col => col.type === 'category');
   const dateColumns = data.columns.filter(col => col.type === 'date');
@@ -121,87 +121,67 @@ const Dashboard: React.FC<DashboardProps> = ({
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-  link.href = url;
-  link.download = `${description.replace(/\s+/g, '_')}_filtered_data.csv`;
-  link.click();
-  URL.revokeObjectURL(url);
-};
+    link.href = url;
+    link.download = `${description.replace(/\s+/g, '_')}_filtered_data.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex flex-col font-sans">
-      {/* Premium Executive Header */}
-      <header className="bg-[#0d2240] shadow-lg py-4 px-6 flex-shrink-0 sticky top-0 z-50 border-b border-blue-900">
+    <div className="min-h-screen bg-[#f8f9fc] flex flex-col font-sans">
+      {/* Modern Executive Header */}
+      <header className="bg-gradient-to-r from-[#0d1f3d] to-[#1a3a5c] shadow-lg py-4 px-6 flex-shrink-0 sticky top-0 z-50">
         <div className="max-w-full flex items-center justify-between">
-          {/* Left: Logo, Title, Subtitle */}
           <div className="flex items-center gap-4">
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden p-2 hover:bg-blue-900/20 rounded-lg transition-colors text-white"
-            >
-              {sidebarOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-700 to-blue-500 rounded-xl flex items-center justify-center text-white font-extrabold text-2xl shadow-md">
-                <span className="sr-only">Logo</span>📊
+              <div className="w-10 h-10 bg-gradient-to-br from-[#0d6efd] to-[#0a58ca] rounded-lg flex items-center justify-center shadow-lg">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
               </div>
               <div>
-                <h1 className="text-2xl font-extrabold text-white tracking-tight leading-tight">Sales Sample Data Dashboard</h1>
-                <p className="text-sm text-blue-200 font-medium -mt-1">Professional Analytics & Insights</p>
+                <h1 className="text-xl font-bold text-white tracking-tight">Sales Sample Data Dashboard</h1>
+                <p className="text-xs text-blue-200 font-medium">Professional Analytics & Insights</p>
               </div>
             </div>
           </div>
-          {/* Right: Export and Home buttons */}
           <div className="flex items-center gap-3">
             <button
               onClick={exportData}
-              className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-xl shadow transition-colors text-base font-bold border-2 border-green-600"
+              className="flex items-center gap-2 px-4 py-2 bg-[#10b981] hover:bg-[#059669] text-white rounded-lg shadow-md transition-all text-sm font-semibold"
               title="Export filtered data as CSV"
             >
-              <FileJson size={20} />
+              <FileDown size={18} />
               <span className="hidden sm:inline">Export</span>
             </button>
             {onBack && (
               <button
                 onClick={onBack}
-                className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-blue-100 text-blue-900 rounded-xl shadow transition-colors text-base font-bold border-2 border-blue-900"
+                className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-100 text-[#0d1f3d] rounded-lg shadow-md transition-all text-sm font-semibold"
               >
-                <Home size={20} />
+                <Home size={18} />
                 <span className="hidden sm:inline">Home</span>
               </button>
             )}
           </div>
-
         </div>
       </header>
 
-      {/* Main Content */}
       <div className="flex flex-1 overflow-hidden min-h-0">
-        {/* Sidebar */}
-        <div className={`fixed lg:static inset-0 lg:inset-auto z-30 transition-all duration-300 ${
-          sidebarOpen ? 'left-0' : 'left-full lg:left-0'
-        }`}>
-          {sidebarOpen && (
-            <div
-              className="absolute inset-0 bg-black/50 lg:hidden"
-              onClick={() => setSidebarOpen(false)}
-            />
-          )}
-          <div className="relative w-80 lg:w-72 bg-white border-r border-gray-200 overflow-y-auto shadow-lg lg:shadow-none h-full lg:h-auto">
-            <div className="p-4 border-b border-gray-200 sticky top-0 bg-white flex items-center justify-between lg:justify-start">
+        {/* Fixed Left Sidebar - Filters */}
+        <aside className={`${sidebarCollapsed ? 'w-0' : 'w-72'} transition-all duration-300 ease-in-out bg-white border-r border-gray-200 shadow-sm relative flex-shrink-0 overflow-hidden`}>
+          <div className={`${sidebarCollapsed ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300 h-full flex flex-col`}>
+            <div className="p-5 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <span className="text-lg">🔍</span>
+                <div className="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-[#0d6efd]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                  </svg>
                 </div>
-                <h2 className="text-lg font-bold text-gray-900">Filters</h2>
+                <h2 className="text-base font-bold text-gray-900">Filters</h2>
               </div>
-              <button
-                onClick={() => setSidebarOpen(false)}
-                className="lg:hidden p-1 hover:bg-gray-100 rounded"
-              >
-                <X size={20} />
-              </button>
             </div>
-            <div className="p-4">
+            <div className="flex-1 overflow-y-auto p-5">
               <Filters
                 onFilterChange={handleFilterChange}
                 onYearChange={handleYearChange}
@@ -212,87 +192,72 @@ const Dashboard: React.FC<DashboardProps> = ({
               />
             </div>
           </div>
-        </div>
+          <button
+            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+            className="absolute top-1/2 -right-3 transform -translate-y-1/2 w-6 h-12 bg-white border border-gray-200 rounded-r-lg shadow-md hover:bg-gray-50 transition-colors flex items-center justify-center"
+          >
+            {sidebarCollapsed ? <ChevronRight size={16} className="text-gray-600" /> : <ChevronLeft size={16} className="text-gray-600" />}
+          </button>
+        </aside>
 
         {/* Main Content Area */}
-        <div className="flex-1 overflow-y-auto min-h-0 p-4 md:p-6 space-y-8">
-          {/* Data Quality Alert */}
-          {data.warnings.length > 0 && (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <div className="flex items-start gap-3">
-                <div className="text-xl">ℹ️</div>
-                <div className="flex-1">
-                  <h4 className="font-semibold text-blue-900 text-sm mb-2">Data Quality Report</h4>
-                  <ul className="text-sm text-blue-800 space-y-1">
-                    {data.warnings.map((warning, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="text-blue-600 font-bold">✓</span>
-                        <span>{warning}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+        <main className="flex-1 overflow-y-auto bg-[#f8f9fc] p-8">
+          <div className="max-w-[1600px] mx-auto space-y-8">
+            {/* Top 4 KPI Cards - Uniform & Clean */}
+            <section>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                {kpis.slice(0, 4).map((metric) => (
+                  <KPICard key={metric.id} metric={metric} />
+                ))}
               </div>
-            </div>
-          )}
+            </section>
 
-          {/* Section 1: Key Performance Indicators */}
-          <section>
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">Key Performance Indicators</h2>
-              <p className="text-sm text-gray-500 mt-2">Core metrics and KPIs at a glance</p>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {kpis.map((metric, idx) => (
-                <div key={idx} className="transition-transform duration-300 hover:scale-105">
-                  <KPICard metric={metric} />
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Section 2: Analytics & Visualizations - Executive Layout */}
-          <section className="w-full max-w-7xl mx-auto mt-8">
-            <div className="mb-8">
-              <h2 className="text-2xl font-extrabold text-gray-900">Sales Trend Overview</h2>
-              <p className="text-sm text-gray-500 mt-1">Sales Trend by Order Date (Monthly/Yearly)</p>
-            </div>
-            {/* Large Trend Chart */}
-            <div className="bg-white rounded-2xl shadow-xl p-8 mb-10 border border-gray-100">
-              {dateColumns.length > 0 && salesColumn && (
-                <TrendLineChart
-                  data={aggregateByDate(filteredData, dateColumns[0].name, salesColumn.name)}
-                  title={`Sales Trend by ${dateColumns[0].name}`}
-                />
-              )}
-            </div>
-
-            {/* Donut and Bar Charts Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-              {/* Donut Chart: Product Line Composition */}
-              <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 flex flex-col justify-center">
-                {categoryColumns[2] && salesColumn && (
-                  <DistributionPieChart
-                    data={aggregateByCategory(filteredData, categoryColumns[2].name, salesColumn.name)}
-                    title="Product Line Composition"
+            {/* Large Sales Trend Chart */}
+            <section>
+              <div className="mb-4">
+                <h2 className="text-xl font-bold text-gray-900">Sales Trend Analysis</h2>
+                <p className="text-sm text-gray-500 mt-1">Revenue performance over time</p>
+              </div>
+              <div className="bg-white rounded-xl shadow-md border border-gray-200 p-8">
+                {dateColumns.length > 0 && salesColumn && (
+                  <TrendLineChart
+                    data={aggregateByDate(filteredData, dateColumns[0].name, salesColumn.name)}
+                    title={`Sales Trend by ${dateColumns[0].name}`}
                   />
                 )}
               </div>
-              {/* Bar Chart: Sales by Status */}
-              <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 flex flex-col justify-center">
-                {categoryColumns[1] && salesColumn && (
-                  <ColumnChart
-                    data={aggregateByCategory(filteredData, categoryColumns[1].name, salesColumn.name)}
-                    title={`Sales Distribution by ${categoryColumns[1].name}`}
-                  />
-                )}
-              </div>
-            </div>
+            </section>
 
-            {/* Bottom: Top Cities/Territories by Sales */}
-            <div className="mb-10">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Top Cities/Territories by Sales</h3>
-              <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+            {/* Two Side-by-Side Charts */}
+            <section>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Donut Chart: Product Line Composition */}
+                <div className="bg-white rounded-xl shadow-md border border-gray-200 p-8">
+                  {categoryColumns[2] && salesColumn && (
+                    <DistributionPieChart
+                      data={aggregateByCategory(filteredData, categoryColumns[2].name, salesColumn.name)}
+                      title="Product Line Composition"
+                    />
+                  )}
+                </div>
+                {/* Bar Chart: Sales by Status */}
+                <div className="bg-white rounded-xl shadow-md border border-gray-200 p-8">
+                  {categoryColumns[1] && salesColumn && (
+                    <ColumnChart
+                      data={aggregateByCategory(filteredData, categoryColumns[1].name, salesColumn.name)}
+                      title={`Sales Distribution by ${categoryColumns[1].name}`}
+                    />
+                  )}
+                </div>
+              </div>
+            </section>
+
+            {/* Bottom: Top Cities/Territories */}
+            <section>
+              <div className="mb-4">
+                <h3 className="text-lg font-bold text-gray-900">Top Cities / Territories by Sales</h3>
+              </div>
+              <div className="bg-white rounded-xl shadow-md border border-gray-200 p-8">
                 {categoryColumns[0] && salesColumn && (
                   <CategoryBarChart
                     data={aggregateByCategory(filteredData, categoryColumns[0].name, salesColumn.name)}
@@ -300,20 +265,31 @@ const Dashboard: React.FC<DashboardProps> = ({
                   />
                 )}
               </div>
-            </div>
+            </section>
 
-            {/* Collapsible detailed table (optional, placeholder) */}
-            <div className="mt-10">
-              <details className="bg-gray-50 rounded-xl border border-gray-200 p-4">
-                <summary className="cursor-pointer text-sm font-semibold text-gray-700">Show Raw Data Table (Drill-down)</summary>
-                <div className="mt-4 text-gray-400 text-xs italic">(Paginated, exportable table placeholder – implement as needed)</div>
-              </details>
-            </div>
-          </section>
-
-          {/* Footer Spacing */}
-          <div className="h-10" />
-        </div>
+            {/* Data Quality Info */}
+            {data.warnings.length > 0 && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="flex items-start gap-3">
+                  <svg className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                  </svg>
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-blue-900 text-sm mb-2">Data Quality Report</h4>
+                    <ul className="text-sm text-blue-800 space-y-1">
+                      {data.warnings.map((warning, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="text-blue-600 font-bold">•</span>
+                          <span>{warning}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </main>
       </div>
     </div>
   );
