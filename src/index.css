@@ -1,39 +1,54 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   * {
     @apply font-sans;
   }
 
   body {
-    @apply antialiased bg-[#f8f9fc] text-[#222] min-h-screen;
+    @apply antialiased bg-[#FAFBFC] text-[#1f2937] min-h-screen;
     font-family: 'Inter', 'Roboto', 'Segoe UI', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-sans font-extrabold text-gray-900;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.025em;
   }
 
   ::selection {
-    background: #dbeafe;
+    background: rgba(59, 130, 246, 0.2);
+    color: #1e3a5f;
   }
 }
 @layer utilities {
-  /* Executive navy header */
+  /* Textile-inspired Executive Header */
   .header-navy {
-    background: #0d2240;
+    background: linear-gradient(90deg, #1e3a5f 0%, #2c5282 50%, #1e3a5f 100%);
     color: #fff;
-    border-bottom: 2px solid #0d6efd;
+    border-bottom: 2px solid #3b82f6;
   }
 
-  /* KPI card metrics */
+  /* KPI card metrics - Textile inspired */
   .kpi-metric {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #0d6efd;
-    letter-spacing: -0.02em;
+    font-size: 2.75rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.03em;
+  }
+
+  /* Textile texture pattern overlay */
+  .textile-texture {
+    background-image:
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
   }
 
   /* Rounded corners */

@@ -128,27 +128,27 @@ const Dashboard: React.FC<DashboardProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fc] flex flex-col font-sans">
-      {/* Modern Executive Header */}
-      <header className="bg-gradient-to-r from-[#0d1f3d] to-[#1a3a5c] shadow-lg py-4 px-6 flex-shrink-0 sticky top-0 z-50">
+    <div className="min-h-screen bg-[#FAFBFC] flex flex-col font-sans">
+      {/* Textile-inspired Executive Header */}
+      <header className="bg-gradient-to-r from-[#1e3a5f] via-[#2c5282] to-[#1e3a5f] shadow-xl py-4 px-6 flex-shrink-0 sticky top-0 z-50 border-b-2 border-[#3b82f6]">
         <div className="max-w-full flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#0d6efd] to-[#0a58ca] rounded-lg flex items-center justify-center shadow-lg">
+              <div className="w-11 h-11 bg-gradient-to-br from-[#3b82f6] to-[#2563eb] rounded-xl flex items-center justify-center shadow-lg ring-2 ring-white/20">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white tracking-tight">Sales Sample Data Dashboard</h1>
-                <p className="text-xs text-blue-200 font-medium">Professional Analytics & Insights</p>
+                <h1 className="text-xl font-bold text-white tracking-tight drop-shadow-sm">Sales Sample Data Dashboard</h1>
+                <p className="text-xs text-blue-100 font-medium">Textiles Analytics & Insights</p>
               </div>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <button
               onClick={exportData}
-              className="flex items-center gap-2 px-4 py-2 bg-[#10b981] hover:bg-[#059669] text-white rounded-lg shadow-md transition-all text-sm font-semibold"
+              className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#10b981] to-[#059669] hover:from-[#059669] hover:to-[#047857] text-white rounded-xl shadow-lg hover:shadow-xl transition-all text-sm font-semibold hover:-translate-y-0.5 duration-200"
               title="Export filtered data as CSV"
             >
               <FileDown size={18} />
@@ -157,7 +157,7 @@ const Dashboard: React.FC<DashboardProps> = ({
             {onBack && (
               <button
                 onClick={onBack}
-                className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-100 text-[#0d1f3d] rounded-lg shadow-md transition-all text-sm font-semibold"
+                className="flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-gray-50 text-[#1e3a5f] rounded-xl shadow-lg hover:shadow-xl transition-all text-sm font-semibold hover:-translate-y-0.5 duration-200"
               >
                 <Home size={18} />
                 <span className="hidden sm:inline">Home</span>
@@ -169,19 +169,19 @@ const Dashboard: React.FC<DashboardProps> = ({
 
       <div className="flex flex-1 overflow-hidden min-h-0">
         {/* Fixed Left Sidebar - Filters */}
-        <aside className={`${sidebarCollapsed ? 'w-0' : 'w-72'} transition-all duration-300 ease-in-out bg-white border-r border-gray-200 shadow-sm relative flex-shrink-0 overflow-hidden`}>
+        <aside className={`${sidebarCollapsed ? 'w-0' : 'w-80'} transition-all duration-300 ease-in-out bg-gradient-to-b from-white to-gray-50 border-r-2 border-gray-200 shadow-lg relative flex-shrink-0 overflow-hidden`}>
           <div className={`${sidebarCollapsed ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300 h-full flex flex-col`}>
-            <div className="p-5 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white">
-              <div className="flex items-center gap-2">
-                <div className="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <svg className="w-5 h-5 text-[#0d6efd]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="p-6 border-b-2 border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-md">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                   </svg>
                 </div>
-                <h2 className="text-base font-bold text-gray-900">Filters</h2>
+                <h2 className="text-lg font-bold text-gray-900">Filters</h2>
               </div>
             </div>
-            <div className="flex-1 overflow-y-auto p-5">
+            <div className="flex-1 overflow-y-auto p-6 scrollbar-thin">
               <Filters
                 onFilterChange={handleFilterChange}
                 onYearChange={handleYearChange}
@@ -194,14 +194,14 @@ const Dashboard: React.FC<DashboardProps> = ({
           </div>
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="absolute top-1/2 -right-3 transform -translate-y-1/2 w-6 h-12 bg-white border border-gray-200 rounded-r-lg shadow-md hover:bg-gray-50 transition-colors flex items-center justify-center"
+            className="absolute top-1/2 -right-3 transform -translate-y-1/2 w-6 h-14 bg-gradient-to-br from-blue-500 to-indigo-600 border-2 border-white rounded-r-xl shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all flex items-center justify-center"
           >
-            {sidebarCollapsed ? <ChevronRight size={16} className="text-gray-600" /> : <ChevronLeft size={16} className="text-gray-600" />}
+            {sidebarCollapsed ? <ChevronRight size={18} className="text-white" /> : <ChevronLeft size={18} className="text-white" />}
           </button>
         </aside>
 
         {/* Main Content Area */}
-        <main className="flex-1 overflow-y-auto bg-[#f8f9fc] p-8">
+        <main className="flex-1 overflow-y-auto bg-[#FAFBFC] p-8">
           <div className="max-w-[1600px] mx-auto space-y-8">
             {/* Top 4 KPI Cards - Uniform & Clean */}
             <section>
@@ -214,11 +214,14 @@ const Dashboard: React.FC<DashboardProps> = ({
 
             {/* Large Sales Trend Chart */}
             <section>
-              <div className="mb-4">
-                <h2 className="text-xl font-bold text-gray-900">Sales Trend Analysis</h2>
-                <p className="text-sm text-gray-500 mt-1">Revenue performance over time</p>
+              <div className="mb-5">
+                <h2 className="text-2xl font-extrabold text-gray-900 flex items-center gap-3">
+                  <div className="w-1.5 h-8 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full"></div>
+                  Sales Trend Overview
+                </h2>
+                <p className="text-sm text-gray-600 mt-2 ml-6">Revenue performance over time with monthly/yearly breakdown</p>
               </div>
-              <div className="bg-white rounded-xl shadow-md border border-gray-200 p-8">
+              <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-xl border-2 border-gray-200 p-10">
                 {dateColumns.length > 0 && salesColumn && (
                   <TrendLineChart
                     data={aggregateByDate(filteredData, dateColumns[0].name, salesColumn.name)}
@@ -230,9 +233,16 @@ const Dashboard: React.FC<DashboardProps> = ({
 
             {/* Two Side-by-Side Charts */}
             <section>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="mb-5">
+                <h2 className="text-2xl font-extrabold text-gray-900 flex items-center gap-3">
+                  <div className="w-1.5 h-8 bg-gradient-to-b from-emerald-500 to-teal-600 rounded-full"></div>
+                  Performance Breakdown
+                </h2>
+                <p className="text-sm text-gray-600 mt-2 ml-6">Product composition and status distribution analysis</p>
+              </div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-7">
                 {/* Donut Chart: Product Line Composition */}
-                <div className="bg-white rounded-xl shadow-md border border-gray-200 p-8">
+                <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-xl border-2 border-gray-200 p-10">
                   {categoryColumns[2] && salesColumn && (
                     <DistributionPieChart
                       data={aggregateByCategory(filteredData, categoryColumns[2].name, salesColumn.name)}
@@ -241,7 +251,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                   )}
                 </div>
                 {/* Bar Chart: Sales by Status */}
-                <div className="bg-white rounded-xl shadow-md border border-gray-200 p-8">
+                <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-xl border-2 border-gray-200 p-10">
                   {categoryColumns[1] && salesColumn && (
                     <ColumnChart
                       data={aggregateByCategory(filteredData, categoryColumns[1].name, salesColumn.name)}
@@ -254,10 +264,14 @@ const Dashboard: React.FC<DashboardProps> = ({
 
             {/* Bottom: Top Cities/Territories */}
             <section>
-              <div className="mb-4">
-                <h3 className="text-lg font-bold text-gray-900">Top Cities / Territories by Sales</h3>
+              <div className="mb-5">
+                <h2 className="text-2xl font-extrabold text-gray-900 flex items-center gap-3">
+                  <div className="w-1.5 h-8 bg-gradient-to-b from-amber-500 to-orange-600 rounded-full"></div>
+                  Top Performers
+                </h2>
+                <p className="text-sm text-gray-600 mt-2 ml-6">Highest revenue generating territories and locations</p>
               </div>
-              <div className="bg-white rounded-xl shadow-md border border-gray-200 p-8">
+              <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-xl border-2 border-gray-200 p-10">
                 {categoryColumns[0] && salesColumn && (
                   <CategoryBarChart
                     data={aggregateByCategory(filteredData, categoryColumns[0].name, salesColumn.name)}

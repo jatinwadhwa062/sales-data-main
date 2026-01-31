@@ -25,7 +25,16 @@ interface BaseChartProps {
   title: string;
 }
 
-const COLORS = ['#DC2626', '#F59E0B', '#10B981', '#0d6efd', '#8B5CF6', '#EC4899', '#06B6D4'];
+// Textile-inspired soft color palette - Pinterest aesthetic
+const COLORS = [
+  '#B91C4C', // Maroon (Classic Cars)
+  '#2563EB', // Soft Blue (Trucks/Buses)
+  '#10B981', // Emerald (Motorcycles)
+  '#F59E0B', // Amber (Trains)
+  '#7C3AED', // Soft Purple (Ships)
+  '#EC4899', // Rose (Planes)
+  '#14B8A6', // Teal (Vintage)
+];
 
 const tooltipStyle = {
   backgroundColor: 'rgba(255, 255, 255, 0.98)',
@@ -85,41 +94,49 @@ export const TrendLineChart = ({ data, title }: BaseChartProps) => {
           </button>
         </div>
       </div>
-      <ResponsiveContainer width="100%" height={450}>
-        <LineChart data={displayData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+      <ResponsiveContainer width="100%" height={500}>
+        <LineChart data={displayData} margin={{ top: 20, right: 30, left: 60, bottom: 50 }}>
+          <defs>
+            <linearGradient id="salesGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#B91C4C" stopOpacity={0.2} />
+              <stop offset="100%" stopColor="#B91C4C" stopOpacity={0} />
+            </linearGradient>
+          </defs>
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
           <XAxis
             dataKey="date"
             stroke="#6b7280"
-            style={{ fontSize: '13px', fontWeight: '500' }}
-            angle={-45}
-            textAnchor="end"
-            height={80}
+            style={{ fontSize: '12px', fontWeight: '500' }}
+            angle={0}
+            textAnchor="middle"
+            height={50}
             axisLine={{ stroke: '#d1d5db' }}
             tickLine={{ stroke: '#d1d5db' }}
-            interval={0}
+            interval="preserveStartEnd"
           />
           <YAxis
             stroke="#6b7280"
-            style={{ fontSize: '13px', fontWeight: '500' }}
+            style={{ fontSize: '12px', fontWeight: '500' }}
             axisLine={{ stroke: '#d1d5db' }}
             tickLine={{ stroke: '#d1d5db' }}
             tickFormatter={(value) => `$${formatNumber(value)}`}
+            width={80}
           />
           <Tooltip
             formatter={(value: any) => [formatCurrency(value), 'Sales Revenue']}
             contentStyle={{ ...tooltipStyle, fontSize: '13px' }}
-            cursor={{ stroke: '#9ca3af', strokeWidth: 2, strokeDasharray: '5 5' }}
-            labelStyle={{ color: '#111827', fontWeight: 'bold', fontSize: '13px', marginBottom: '4px' }}
+            cursor={{ stroke: '#B91C4C', strokeWidth: 2, strokeDasharray: '5 5', opacity: 0.3 }}
+            labelStyle={{ color: '#111827', fontWeight: 'bold', fontSize: '14px', marginBottom: '6px' }}
           />
           <Line
             type="monotone"
             dataKey="value"
-            stroke="#8B1538"
+            stroke="#B91C4C"
             strokeWidth={3}
-            dot={{ fill: '#8B1538', r: 5, strokeWidth: 2, stroke: '#fff' }}
-            activeDot={{ r: 7, strokeWidth: 2 }}
+            dot={{ fill: '#B91C4C', r: 4, strokeWidth: 2, stroke: '#fff' }}
+            activeDot={{ r: 6, strokeWidth: 2, fill: '#B91C4C' }}
             name="Sales"
+            fill="url(#salesGradient)"
           />
         </LineChart>
       </ResponsiveContainer>
@@ -136,39 +153,38 @@ export const CategoryBarChart = ({ data, title }: BaseChartProps) => {
         <h3 className="text-base font-bold text-gray-900">{title}</h3>
         <p className="text-xs text-gray-500 mt-1">Performance by location</p>
       </div>
-      <ResponsiveContainer width="100%" height={400}>
-        <BarChart data={limitedData} margin={{ top: 20, right: 30, left: 20, bottom: 100 }} layout="horizontal">
-          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+      <ResponsiveContainer width="100%" height={420}>
+        <BarChart data={limitedData} margin={{ top: 20, right: 40, left: 100, bottom: 30 }} layout="horizontal">
+          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" horizontal={false} />
           <XAxis
-            dataKey="name"
-            stroke="#6b7280"
-            style={{ fontSize: '12px', fontWeight: '500' }}
-            angle={-45}
-            textAnchor="end"
-            height={120}
-            axisLine={{ stroke: '#d1d5db' }}
-            tickLine={{ stroke: '#d1d5db' }}
-            interval={0}
-          />
-          <YAxis
+            type="number"
             stroke="#6b7280"
             style={{ fontSize: '12px', fontWeight: '500' }}
             axisLine={{ stroke: '#d1d5db' }}
             tickLine={{ stroke: '#d1d5db' }}
             tickFormatter={(value) => `$${formatNumber(value)}`}
           />
+          <YAxis
+            type="category"
+            dataKey="name"
+            stroke="#6b7280"
+            style={{ fontSize: '12px', fontWeight: '500' }}
+            axisLine={{ stroke: '#d1d5db' }}
+            tickLine={{ stroke: '#d1d5db' }}
+            width={90}
+          />
           <Tooltip
             formatter={(value: any) => [formatCurrency(value), 'Sales']}
             contentStyle={{ ...tooltipStyle, fontSize: '13px' }}
-            cursor={{ fill: 'rgba(13, 110, 253, 0.08)' }}
+            cursor={{ fill: 'rgba(37, 99, 235, 0.08)' }}
             labelStyle={{ color: '#111827', fontWeight: 'bold', fontSize: '13px', marginBottom: '4px' }}
           />
           <Bar
             dataKey="value"
-            fill="#0d6efd"
+            fill="#2563EB"
             name="Sales"
-            radius={[6, 6, 0, 0]}
-            maxBarSize={60}
+            radius={[0, 8, 8, 0]}
+            maxBarSize={35}
           />
         </BarChart>
       </ResponsiveContainer>
@@ -186,15 +202,17 @@ export const ColumnChart = ({ data, title }: BaseChartProps) => {
         <h3 className="text-base font-bold text-gray-900">{title}</h3>
         <p className="text-xs text-gray-500 mt-1">Breakdown by status</p>
       </div>
-      <ResponsiveContainer width="100%" height={350}>
-        <BarChart data={limitedData} margin={{ top: 20, right: 30, left: 20, bottom: 40 }}>
+      <ResponsiveContainer width="100%" height={380}>
+        <BarChart data={limitedData} margin={{ top: 30, right: 30, left: 60, bottom: 40 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
           <XAxis
             dataKey="name"
             stroke="#6b7280"
-            style={{ fontSize: '13px', fontWeight: '500' }}
+            style={{ fontSize: '12px', fontWeight: '500' }}
             axisLine={{ stroke: '#d1d5db' }}
             tickLine={{ stroke: '#d1d5db' }}
+            angle={0}
+            textAnchor="middle"
           />
           <YAxis
             stroke="#6b7280"
@@ -202,23 +220,24 @@ export const ColumnChart = ({ data, title }: BaseChartProps) => {
             axisLine={{ stroke: '#d1d5db' }}
             tickLine={{ stroke: '#d1d5db' }}
             tickFormatter={(value) => `$${formatNumber(value)}`}
+            width={80}
           />
           <Tooltip
             formatter={(value: any) => [formatCurrency(value), 'Sales']}
             contentStyle={{ ...tooltipStyle, fontSize: '13px' }}
-            cursor={{ fill: 'rgba(13, 110, 253, 0.08)' }}
+            cursor={{ fill: 'rgba(16, 185, 129, 0.08)' }}
             labelStyle={{ color: '#111827', fontWeight: 'bold', fontSize: '13px', marginBottom: '4px' }}
           />
           <Bar
             dataKey="value"
             name="Sales"
-            radius={[6, 6, 0, 0]}
-            maxBarSize={70}
+            radius={[8, 8, 0, 0]}
+            maxBarSize={60}
           >
             {limitedData.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={entry.value === maxValue ? '#0d6efd' : '#6c757d'}
+                fill={entry.value === maxValue ? '#10B981' : '#94A3B8'}
               />
             ))}
           </Bar>
