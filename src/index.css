@@ -83,7 +83,6 @@
     color: #6c757d;
   }
 
-@layer utilities {
   @keyframes fadeIn {
     from {
       opacity: 0;

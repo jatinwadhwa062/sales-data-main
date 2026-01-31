@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FileUpload } from './components/FileUpload';
 import { LandingPage } from './components/LandingPage';
 import { DescriptionDialog } from './components/DescriptionDialog';
-import { Dashboard } from './components/Dashboard';
+import Dashboard from './components/Dashboard';
 import { parseFile, performEDA, checkDatasetSize } from './utils/dataProcessor';
 import { CleanedData } from './types/dashboard';
 import { Loader2 } from 'lucide-react';

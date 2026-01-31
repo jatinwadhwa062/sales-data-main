@@ -17,8 +17,6 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({
   data,
   description,
-  fileSize,
-  dataType,
   onBack,
 }) => {
   const [filters, setFilters] = useState<FilterState>({
