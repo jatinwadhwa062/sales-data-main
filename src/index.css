@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  * {
+    @apply font-sans;
+  }
+
+  body {
+    @apply antialiased bg-[#f8f9fc] text-[#222] min-h-screen;
+    font-family: 'Inter', 'Roboto', 'Segoe UI', Arial, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans font-extrabold text-gray-900;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: #dbeafe;
+  }
+}
+@layer utilities {
+  /* Executive navy header */
+  .header-navy {
+    background: #0d2240;
+    color: #fff;
+    border-bottom: 2px solid #0d6efd;
+  }
+
+  /* KPI card metrics */
+  .kpi-metric {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #0d6efd;
+    letter-spacing: -0.02em;
+  }
+
+  /* Rounded corners */
+  .rounded-xl {
+    border-radius: 1rem;
+  }
+  .rounded-2xl {
+    border-radius: 1.25rem;
+  }
+  .rounded-3xl {
+    border-radius: 1.5rem;
+  }
+
+  /* Ample white space helpers */
+  .p-8 {
+    padding: 2rem;
+  }
+  .p-5 {
+    padding: 1.25rem;
+  }
+  .p-4 {
+    padding: 1rem;
+  }
+  .p-6 {
+    padding: 1.5rem;
+  }
+
+  /* Minimalist card shadow */
+  .card-shadow {
+    box-shadow: 0 4px 24px 0 rgba(13,34,64,0.08), 0 1.5px 4px 0 rgba(16,30,54,0.04);
+  }
+
+  /* Accent colors */
+  .accent-blue {
+    color: #0d6efd;
+  }
+  .accent-green {
+    color: #198754;
+  }
+  .accent-orange {
+    color: #fd7e14;
+  }
+  .accent-red {
+    color: #dc3545;
+  }
+  .accent-gray {
+    color: #6c757d;
+  }
+
+@layer utilities {
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes pulse-subtle {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .animate-slide-in {
+    animation: slideIn 0.3s ease-out;
+  }
+
+  .animate-pulse-subtle {
+    animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Scrollbar Styling */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 rounded-full hover:bg-gray-600;
+  }
+}
